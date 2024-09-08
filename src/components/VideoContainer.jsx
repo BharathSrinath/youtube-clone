@@ -16,7 +16,7 @@ const VideoContainer = () => {
     setVideos(jsonData.items);
   };
   return (
-    <div  className="grid grid-cols-3">
+    <div  className="grid grid-cols-3 mx-auto">
       {videos.map((videoInfo) => (
         <Link
           key={videoInfo.id}

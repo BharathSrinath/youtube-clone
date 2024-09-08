@@ -10,7 +10,6 @@ const ButtonList = () => {
     "Sports",
     "Fashion",
     "Education",
-    "Coding",
     "Podcasts",
     "News",
     "Technology",

@@ -12,6 +12,7 @@ import likeIcon from "../assets/like-svgrepo-com.svg";
 import dislikeIcon from "../assets/dislike-svgrepo-com.svg";
 import dropdown from "../assets/three-dots-line-svgrepo-com.svg";
 import shareIcon from "../assets/share-svgrepo-com.svg";
+import Comments from "./Comments";
 
 const WatchVideoPage = () => {
   // const [searchParams, setSearchParams] = useSearchParams;
@@ -42,6 +43,9 @@ const WatchVideoPage = () => {
     console.log(jsonVideoData);
   }, [videoId]);
 
+  console.log(videoId);
+  console.log(channel?.statistics?.subscriberCount);
+
   useEffect(() => {
     dispatch(closeSidebar());
     fetchVideo();
@@ -67,8 +71,8 @@ const WatchVideoPage = () => {
           {video && channel && (
             <div>
               <p className=" p-2 font-bold text-lg">{video?.snippet?.title}</p>
-              <div className="grid grid-cols-[30%_18%_25%_17%_10%] items-center">
-                <div className="flex justify-start">
+              <div className="grid grid-cols-12 items-center">
+                <div className="flex justify-start flex-wrap col-span-4">
                   <img
                     className="w-12 h-12 rounded-full mr-2"
                     src={channel?.snippet?.thumbnails?.default?.url}
@@ -82,15 +86,15 @@ const WatchVideoPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center col-span-2">
                   <button className="h-8 p-4 font-bold bg-neutral-900 text-white rounded-l-full rounded-r-full flex justify-center items-center">
                     Subscribe
                   </button>
                 </div>
-                <div className="flex bg-gray-200 rounded-full p-2 m-2 justify-around">
+                <div className="flex bg-gray-200 rounded-full p-2 m-2 justify-around col-span-3">
                   <button className="flex">
                     <img className="w-6 h-6 mr-1" src={likeIcon} alt="like button" />
-                    <p>{video.statistics.likeCount}</p>
+                    <p>{formatNumber(video.statistics.likeCount)}</p>
                   </button>
                   <button>
                     <img
@@ -100,7 +104,7 @@ const WatchVideoPage = () => {
                     />
                   </button>
                 </div>
-                <div className="flex bg-gray-200 rounded-full p-2 m-2">
+                <div className="flex bg-gray-200 rounded-full p-2 m-2 col-span-2">
                   <button className="bg-gray-200 flex">
                     <img
                       className="w-6 h-6 mr-2"
@@ -110,7 +114,7 @@ const WatchVideoPage = () => {
                     <p className="font-medium">Share</p>
                   </button>
                 </div>
-                <div className="flex bg-gray-200 rounded-full p-2 m-2 justify-center items-center">
+                <div className="flex bg-gray-200 rounded-full p-2 m-2 justify-center items-center col-span-1">
                   <button className="bg-gray-200">
                     <img
                       className="w-6 h-6"
@@ -123,8 +127,8 @@ const WatchVideoPage = () => {
             </div>
           )}
         </div>
+        <Comments videoId = {videoId}/>
       </div>
-      <div></div>
     </div>
   );
 };
