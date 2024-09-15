@@ -1,18 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { closeSidebar } from "../store/slices/SideBarSlice";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  YOUR_PROJECT_CREDENTIAL_API_KEY,
-  YOUTUBE_VIDEO_BY_ID_API,
-  YOUTUBE_CHANNEL_BY_ID_API,
-} from "../utils/constants";
+import { useDispatch } from "react-redux";
 import { formatNumber } from "../utils/formatNumber_IND";
 import likeIcon from "../assets/like-svgrepo-com.svg";
 import dislikeIcon from "../assets/dislike-svgrepo-com.svg";
 import dropdown from "../assets/three-dots-line-svgrepo-com.svg";
 import shareIcon from "../assets/share-svgrepo-com.svg";
 import Comments from "./Comments";
+import RecommendedVideos from "./RecommendedVideos";
+import VideoDescription from "./VideoDescription";
+import PageNotFound from "./PageNotFound";
+import useFetchVideosById from "../hooks/useFetchVideosById";
+import { closeSidebar } from "../store/slices/SideBarSlice";
 
 const WatchVideoPage = () => {
   // const [searchParams, setSearchParams] = useSearchParams;
@@ -20,40 +19,16 @@ const WatchVideoPage = () => {
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
 
-  const [video, setVideo] = useState(null);
-  const [channel, setChannel] = useState(null);
-
+  const {video, channel} = useFetchVideosById(videoId);
   const dispatch = useDispatch();
-
-  const fetchVideo = useCallback(async () => {
-    const videoData = await fetch(
-      YOUTUBE_VIDEO_BY_ID_API + videoId + YOUR_PROJECT_CREDENTIAL_API_KEY
-    );
-    const jsonVideoData = await videoData.json();
-
-    const channelId = jsonVideoData?.items[0]?.snippet?.channelId;
-    const channelData = await fetch(
-      YOUTUBE_CHANNEL_BY_ID_API + channelId + YOUR_PROJECT_CREDENTIAL_API_KEY
-    );
-    const jsonChannelData = await channelData?.json();
-
-    setVideo(jsonVideoData?.items[0]);
-    setChannel(jsonChannelData?.items[0]);
-
-    console.log(jsonVideoData);
-  }, [videoId]);
-
-  console.log(videoId);
-  console.log(channel?.statistics?.subscriberCount);
 
   useEffect(() => {
     dispatch(closeSidebar());
-    fetchVideo();
-  }, [dispatch, fetchVideo]);
+  })
 
-  return (
-    <div className="w-4/5 mx-auto mt-3">
-      <div className="w-[70%]">
+  return (video && channel) ? (
+    <div className="w-4/5 mx-auto mt-3 flex">
+      <div className="">
         <iframe
           width="675"
           height="400"
@@ -67,33 +42,39 @@ const WatchVideoPage = () => {
           allowFullScreen
           className="rounded-2xl"
         ></iframe>
-        <div className="w-[90%] mt-1">
+        <div className="my-1">
           {video && channel && (
             <div>
-              <p className=" p-2 font-bold text-lg">{video?.snippet?.title}</p>
+              <p className=" p-2 font-bold text-lg ">{video?.snippet?.title}</p>
               <div className="grid grid-cols-12 items-center">
-                <div className="flex justify-start flex-wrap col-span-4">
+                <div className="flex justify-start col-span-3">
                   <img
                     className="w-12 h-12 rounded-full mr-2"
                     src={channel?.snippet?.thumbnails?.default?.url}
                     alt="channel logo"
                   />
                   <div>
-                    <p className="font-bold">{video?.snippet?.channelTitle}</p>
+                    <p className="overflow-hidden whitespace-nowrap text-ellipsis max-w-28 font-bold">
+                      {video?.snippet?.channelTitle}
+                    </p>
                     <p className="text-sm text-gray-600">
                       {formatNumber(channel?.statistics?.subscriberCount)}{" "}
                       subscribers
                     </p>
                   </div>
                 </div>
-                <div className="flex justify-center items-center col-span-2">
+                <div className="flex justify-center items-center col-span-3">
                   <button className="h-8 p-4 font-bold bg-neutral-900 text-white rounded-l-full rounded-r-full flex justify-center items-center">
                     Subscribe
                   </button>
                 </div>
                 <div className="flex bg-gray-200 rounded-full p-2 m-2 justify-around col-span-3">
                   <button className="flex">
-                    <img className="w-6 h-6 mr-1" src={likeIcon} alt="like button" />
+                    <img
+                      className="w-6 h-6 mr-1"
+                      src={likeIcon}
+                      alt="like button"
+                    />
                     <p>{formatNumber(video.statistics.likeCount)}</p>
                   </button>
                   <button>
@@ -127,9 +108,15 @@ const WatchVideoPage = () => {
             </div>
           )}
         </div>
-        <Comments videoId = {videoId}/>
+        {video && <VideoDescription video={video} />}
+        {video && <Comments video={video} />}
+      </div>
+      <div className="w-[70%] mx-4">
+        <RecommendedVideos />
       </div>
     </div>
+  ) : (
+    <PageNotFound/>
   );
 };
 
