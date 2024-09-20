@@ -37,7 +37,7 @@ const SideBar = () => {
   if (!isSideBarOpen) return null;
 
   return (
-    <div className="m-4 w-1/6">
+    <div className="m-4">
       <ul className="p-2">
         <div className="flex p-1 items-center">
           <img className="w-6 h-6 mr-1" src={home} alt="home logo" />

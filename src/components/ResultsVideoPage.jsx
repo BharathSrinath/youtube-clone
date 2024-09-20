@@ -27,10 +27,11 @@ const ResultsVideoPage = () => {
   useEffect(() => {
     dispatch(openSidebar());
     fetchVideos();
+    // eslint-disable-next-line
   }, [searchQuery]);
 
   return (
-    <div className="w-4/5">
+    <div className="w-full sm:w-11/12 sm:mx-auto md:w-4/5 xl:w-[70%]">
       {videos.map((video) => {
         return (
           <ResultsVideo key={video.id.videoId} videoId={video.id.videoId}/>

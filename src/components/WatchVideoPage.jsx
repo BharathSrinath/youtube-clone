@@ -9,13 +9,11 @@ import shareIcon from "../assets/share-svgrepo-com.svg";
 import Comments from "./Comments";
 import RecommendedVideos from "./RecommendedVideos";
 import VideoDescription from "./VideoDescription";
-import PageNotFound from "./PageNotFound";
 import useFetchVideosById from "../hooks/useFetchVideosById";
 import { closeSidebar } from "../store/slices/SideBarSlice";
 
 const WatchVideoPage = () => {
-  // const [searchParams, setSearchParams] = useSearchParams;
-  // We are just trying to read searchParams. So we do not need a setter function here.
+
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
 
@@ -26,12 +24,10 @@ const WatchVideoPage = () => {
     dispatch(closeSidebar());
   })
 
-  return (video && channel) ? (
-    <div className="w-4/5 mx-auto mt-3 flex">
-      <div className="">
+  return video && channel && (
+    <div className="w-11/12 mx-auto mt-3 flex ">
+      <div className="xl:w-3/5 lg:w-[70%]">
         <iframe
-          width="675"
-          height="400"
           // src={`https://www.youtube.com/embed/${videoId}`}
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
           // autoplay was doesnt work in most modern browsers unless the video is set to mute. But the way can be used to make the video play.
@@ -40,13 +36,13 @@ const WatchVideoPage = () => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-          className="rounded-2xl"
+          className="rounded-2xl w-full aspect-video"
         ></iframe>
         <div className="my-1">
           {video && channel && (
             <div>
               <p className=" p-2 font-bold text-lg ">{video?.snippet?.title}</p>
-              <div className="grid grid-cols-12 items-center">
+              <div className="hidden sm:grid sm:grid-cols-12 sm:items-center">
                 <div className="flex justify-start col-span-3">
                   <img
                     className="w-12 h-12 rounded-full mr-2"
@@ -109,15 +105,16 @@ const WatchVideoPage = () => {
           )}
         </div>
         {video && <VideoDescription video={video} />}
+        <div className="lg:hidden ">
+          <RecommendedVideos />
+        </div>
         {video && <Comments video={video} />}
       </div>
-      <div className="w-[70%] mx-4">
+      <div className="hidden lg:block xl:w-2/5 lg:w-[30%] mx-4">
         <RecommendedVideos />
       </div>
     </div>
-  ) : (
-    <PageNotFound/>
-  );
+  )
 };
 
 export default WatchVideoPage;

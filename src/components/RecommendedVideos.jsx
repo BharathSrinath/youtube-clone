@@ -13,19 +13,23 @@ const RecommendedVideos = () => {
 
     return (
       <Link
-        className="flex w-full h-28 cursor-pointer py-2"
+        className="flex flex-col w-full m-2 p-2 lg:m-1 lg:p-2 xl:w-[90%] xl:flex-row xl:h-28 cursor-pointer py-2"
         to={"/watch?v=" + video.id}
         key={video.id}
       >
         <img
-          className="h-24 rounded-lg mr-2"
+          className="xl:h-24 rounded-lg mr-2"
           src={thumbnails?.maxres?.url}
           alt="video thumbnail"
         />
-        <div className="grid grid-flow-row">
-          <p className="font-bold row-span-8 overflow-hidden">{title}</p>
-          <p className="text-gray-500 row-span-2">{channelTitle}</p>
-          <p className="text-gray-500 row-span-2">
+        <div className="xl:grid xl:grid-flow-row ">
+          <p className="font-bold hidden lg:block xl:row-span-8 overflow-hidden text-ellipsis">
+            {title}
+          </p>
+          <p className="hidden xl:block text-gray-500 xl:row-span-2">
+            {channelTitle}
+          </p>
+          <p className="hidden xl:block text-gray-500 xl:row-span-2">
             {formatNumber(statistics?.viewCount)} views{" "}
             <span className="font-extrabold">{" . "}</span>
             {formatTime(snippet.publishedAt)}
@@ -35,7 +39,7 @@ const RecommendedVideos = () => {
     );
   });
 
-  return <div>{renderedVideos}</div>;
+  return <div className="grid grid-cols-1 sm:grid-cols-2 sm:m-4 lg:block lg:m-0">{renderedVideos}</div>;
 };
 
 export default RecommendedVideos;

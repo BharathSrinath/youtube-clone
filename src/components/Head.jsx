@@ -5,11 +5,7 @@ import userIcon from "../assets/user-circle-svgrepo-com.svg";
 import youtubeIcon from "../assets/youtube-svgrepo-com.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../store/slices/SideBarSlice";
-import {
-  YOUTUBE_SUGGESTIONS_API,
-  YOUTUBE_SEARCH_BY_QUERY,
-  YOUR_PROJECT_CREDENTIAL_API_KEY,
-} from "../utils/constants";
+import { YOUTUBE_SUGGESTIONS_API } from "../utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import { cachedResults } from "../store/slices/SearchCacheSlice.jsx";
 import { useNavigate } from "react-router-dom";
@@ -109,7 +105,7 @@ const Head = () => {
   };
 
   return (
-    <div className="flex justify-between m-2">
+    <div className="flex justify-between my-2 mx-8">
       <div className="flex items-center">
         <img
           className="h-6 cursor-pointer"
