@@ -1,6 +1,12 @@
 # YouTube Clone
 
-## Features:
+# Live: 
+    https://clone-3621d.web.app/
+
+# Youtube Demo: 
+    https://www.youtube.com/watch?v=48MKqiCWwdI 
+
+# Features:
 
 1. YouTube Home Feed
    - Displays a collection of videos on the homepage.
