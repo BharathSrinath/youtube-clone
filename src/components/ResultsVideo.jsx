@@ -22,7 +22,6 @@ const ResultsVideo = ({ videoId }) => {
           <Link
             className="flex flex-col sm:flex-row md:h-[50vh] cursor-pointer p-2 m-2 "
             to={"/watch?v=" + video.id}
-            key={video.id}
           >
             <img
               className="w-full sm:w-1/2 rounded-lg m-2"

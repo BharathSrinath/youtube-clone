@@ -7,7 +7,7 @@ const VideoContainer = ({ info }) => {
  const videos = useFetchVideos();
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3">
+    <div className="w-[95%] md:grid md:w-full md:grid-cols-2 lg:grid-cols-3 lg:w-full">
       {videos.map((videoInfo) => {
         return (
           <Link key={videoInfo.id} to={"/watch?v=" + videoInfo.id}>

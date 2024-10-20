@@ -25,8 +25,8 @@ const WatchVideoPage = () => {
   })
 
   return video && channel && (
-    <div className="w-11/12 mx-auto mt-3 flex ">
-      <div className="xl:w-3/5 lg:w-[70%]">
+    <div className="w-11/12 mx-auto mt-3 flex justify-center">
+      <div className="w-[99%] xl:w-3/5 lg:w-[70%]">
         <iframe
           // src={`https://www.youtube.com/embed/${videoId}`}
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
